@@ -62337,23 +62337,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
               })["catch"](function (error) {
                 if (error.responseJSON.license_expired) {
-                  return next({
-                    path: '/checkout/trimestral'
-                  }); // legado:
-                  // store.dispatch('auth/logout', localStorage.getItem('access_token'))
-                  // .then(function (response) {
-                  //   localStorage.removeItem('access_token');
-                  //   Swal.fire({
-                  //     position: 'top-end',
-                  //     icon: 'error',
-                  //     title: 'Sua assinatura venceu!',
-                  //     showConfirmButton: false,
-                  //     timer: 3000
-                  //   })
-                  //   return next({
-                  //     path: 'princing',
-                  //   })
-                  // })
+                  // legado:
+                  _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('auth/logout', localStorage.getItem('access_token')).then(function (response) {
+                    localStorage.removeItem('access_token');
+                    Swal.fire({
+                      position: 'top-end',
+                      icon: 'error',
+                      title: 'Sua assinatura venceu!',
+                      showConfirmButton: false,
+                      timer: 3000
+                    });
+                    return next({
+                      path: '/checkout/trimestral'
+                    });
+                  });
                 } else {
                   return next();
                 }
@@ -62455,7 +62452,8 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       return Promise.all(/*! import() */[__webpack_require__.e(8), __webpack_require__.e(0)]).then(__webpack_require__.bind(null, /*! ../components/Pages/Checkout */ "./resources/js/components/Pages/Checkout.vue"));
     },
     meta: {
-      auth: false
+      auth: true,
+      role: 1
     }
   },
   /* autenticated pages */

@@ -25,24 +25,23 @@ export default async (to, from, next) => {
     })
     .catch(error => {
       if(error.responseJSON.license_expired) {
-        return next({
-          path: '/checkout/trimestral',
-        })
+
         // legado:
-        // store.dispatch('auth/logout', localStorage.getItem('access_token'))
-        // .then(function (response) {
-        //   localStorage.removeItem('access_token');
-        //   Swal.fire({
-        //     position: 'top-end',
-        //     icon: 'error',
-        //     title: 'Sua assinatura venceu!',
-        //     showConfirmButton: false,
-        //     timer: 3000
-        //   })
-        //   return next({
-        //     path: 'princing',
-        //   })
-        // })
+        store.dispatch('auth/logout', localStorage.getItem('access_token'))
+        .then(function (response) {
+          localStorage.removeItem('access_token');
+          Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'Sua assinatura venceu!',
+            showConfirmButton: false,
+            timer: 3000
+          })
+          return next({
+            path: '/checkout/trimestral',
+          })
+        })
+
       } else {
         return next();
       }

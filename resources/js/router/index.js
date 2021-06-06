@@ -13,7 +13,7 @@ const router = new VueRouter({
 
     // steps join
     { path: '/join', component: () => import('../components/Pages/Join'), meta: {auth: false} },
-    { path: '/checkout/:plan', component: () => import('../components/Pages/Checkout'), meta: {auth: false} },
+    { path: '/checkout/:plan', component: () => import('../components/Pages/Checkout'), meta: {auth: true, role: 1} },
 
     /* autenticated pages */
     { path: '/home', component: () => import('../components/Pages/Logged'), meta: {auth: true, role: 1} },
