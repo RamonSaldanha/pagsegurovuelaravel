@@ -1,32 +1,32 @@
 <template>
-  <!-- <ul class="navbar-nav">
-    <li class="nav-item" v-if="!$route.meta.auth">
-      <router-link class="nav-link" to="/login">Entrar</router-link>
-    </li>
-    <li class="nav-item" v-if="!$route.meta.auth">
-      <router-link class="nav-link" to="/register">Registrar</router-link>
-    </li>
-    <li class="nav-item" v-if="$route.meta.auth">
-      <a class="nav-link" @click="logout()">Sair</a>
-    </li>
-  </ul> -->
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav ml-auto"v-if="!$route.meta.auth">
-      <li class="nav-item" >
-        <router-link class="nav-link" to="/login">Entrar</router-link>
-      </li>
-      <li class="nav-item">
-        <router-link class="nav-link" to="/register">Registrar</router-link>
-      </li>
+  <nav class="navbar navbar-expand-sm navbar-light border-bottom mb-4">
+    <div class="container-fluid">
+      <router-link class="navbar-brand" to="/">Company name</router-link>
+      <div class="collapse navbar-collapse w-100" id="navbarSupportedContent">
+        <ul class="navbar-nav" v-if="!isAuth">
+          <li class="nav-item">
+            <router-link class="nav-link" to="/pricing">Preços</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/login">Entrar</router-link>
+          </li>
+        </ul>
 
-    </ul>
-    <ul class="navbar-nav ml-auto" v-else>
-      <li class="nav-item"></li>
-        <a class="nav-link" @click="logout()" id="logout">Sair</a>
-      </li>
-    </ul>
-  </div>
-
+        <ul class="navbar-nav h-100" v-else>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/home">Home</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/admin">Admin</router-link>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" @click="logout()" id="logout">Sair</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+  </nav>
 </template>
 
 <script>

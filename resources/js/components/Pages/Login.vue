@@ -5,14 +5,19 @@
       <form @submit.prevent="login()">
         <div class="form-group">
           <label for="exampleInputEmail1">E-mail</label>
-          <input type="email" v-model="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          <input type="email" v-model="email" :class="{ 'is-invalid': error }" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          <div class="invalid-feedback" v-if="error">
+            {{ error }}
+          </div>
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">Senha</label>
-          <input type="password" v-model="password" class="form-control" id="exampleInputPassword1">
+          <input type="password" v-model="password" :class="{ 'is-invalid': error }" class="form-control" id="exampleInputPassword1">
         </div>
-
-        <b-button native-type="submit" type="is-primary">Entrar</b-button>
+        <div class="invalid-feedback" v-if="error">
+          {{ error }}
+        </div>
+        <button class="btn btn-primary" type="submit">Entrar</button>
       </form>
       </div>
     </div>
@@ -27,7 +32,14 @@
     data() {
       return {
         email: '',
-        password: ''
+        password: '',
+        error: '',
+        errors: {
+          name: '',
+          email: '',
+          password: '',
+          'password_confirmation': ''
+        }
       }
     },
     mixins: [authMixin]

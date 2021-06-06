@@ -1,11 +1,12 @@
 <template>
   <div class="auth-page">
     <div class="d-flex flex-column h-100">
+
       <div class="m-auto col-md-5">
         <form @submit.prevent="signup()">
           <div class="form-group">
-            <label for="nome-sobrenome">Nome e Sobrenome</label>
-            <input type="text" v-model="name" :class="{ 'is-invalid': errors.name }" class="form-control" id="nome-sobrenome" aria-describedby="nome-sobrenome">
+            <label for="name">Nome e Sobrenome</label>
+            <input type="text" v-model="name" :class="{ 'is-invalid': errors.name }" class="form-control" id="name" aria-describedby="name">
             <div class="invalid-feedback" v-if="errors.name">
               {{ errors.name[0] }}
             </div>
@@ -35,7 +36,10 @@
             </div>
           </div>
 
-          <b-button native-type="submit" type="is-primary">Cadastrar</b-button>
+          <button class="btn btn-primary" type="submit">
+            Cadastrar
+          </button>
+
         </form>
       </div>
     </div>

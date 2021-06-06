@@ -1,5 +1,3 @@
-import auth from '../../api/auth';
-
 const state = {
   user: {},
   token: '',
@@ -16,21 +14,25 @@ const actions = {
 
   login({commit}, data) {
     return new Promise((resolve, reject) => {
-      //api/auth.js login()
-      auth.loginUser( data ).then(response => {
-        commit('setUser', response.data);
+      axios.post('/api/auth/login', {
+        email: data.email,
+        password: data.password,
+        "remember_me": true
+      }).then(res => {
+        commit('setUser', res.data);
         commit('setAuth', true);
-        resolve(response);
-      }).catch(error => {
-        reject(error);
+        commit('setToken', res.data.access_token);
+        resolve(res);
+      }).catch( error => {
+        reject(error)
       })
-
     });
   },
 
   logout({commit}, token) {
     return new Promise((resolve, reject) => {
-      auth.logoutUser( token ).then(response => {
+      axios.get('/api/auth/logout', { headers: { Authorization: `Bearer ${token}` } })
+      .then(response => {
         commit('setAuth', false);
         resolve(response);
       }).catch(error => {
@@ -39,13 +41,21 @@ const actions = {
     });
   },
 
-  getUsetByToken( {commit}, token ) {
+  getUserByToken( {commit}, token ) {
     return new Promise((resolve, reject) => {
-      auth.getUser( token ).then(response => {
+      $.ajax({
+        url: '/api/auth/user',
+        method: 'get',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      .then(response => {
         commit('setUser', response.data );
         commit('setAuth', true);
         resolve(response);
-      }).catch(error => {
+      })
+      .catch(error => {
         reject(error);
       })
       
@@ -54,8 +64,17 @@ const actions = {
 
   signup ({commit}, data) {
     return new Promise((resolve, reject) => {
-
-      auth.registerUser( data ).then(response => {
+      $.ajax({
+        url: '/api/auth/signup',
+        data: {
+          name: data.name,
+          email: data.email,
+          password: data.password,
+          "password_confirmation": data.password_confirmation
+        },
+        method: "post",
+      })
+      .then(response => {
         resolve(response);
       }).catch(error => {
         reject(error);
@@ -71,6 +90,9 @@ const mutations = {
   },
   setAuth (state, mode) {
     state.isAuth = mode;
+  },
+  setToken (state, token) {
+    state.token = token;
   }
 };
 

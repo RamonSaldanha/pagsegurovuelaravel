@@ -19,15 +19,25 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::group([
-    'prefix' => 'auth'
+    'prefix' => 'auth',
 ], function () {
     Route::post('login', 'AuthController@login');
     Route::post('signup', 'AuthController@signup');
-  
+
     Route::group([
-      'middleware' => 'auth:api'
+      'middleware' => 'auth:api',
     ], function() {
+        Route::group(['middleware' => 'checkLicense'], function(){
+            Route::get('user', 'AuthController@user');
+        });
+
         Route::get('logout', 'AuthController@logout');
-        Route::get('user', 'AuthController@user');
     });
 });
+
+Route::post('checkout/pay', 'CheckoutController@pay');
+Route::post('checkout/webhook', 'CheckoutController@webhook');
+
+Route::get('checkout/session', 'CheckoutController@getSession');
+
+Route::get('plans/{plan}', 'CheckoutController@plans');
