@@ -17,7 +17,7 @@
             <router-link class="nav-link" to="/home">Home</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/admin">Admin</router-link>
+            <router-link class="nav-link" to="/admin" v-if="user.role >= 9">Admin</router-link>
           </li>
           <li class="nav-item">
             <a class="nav-link" @click="logout()" id="logout">Sair</a>

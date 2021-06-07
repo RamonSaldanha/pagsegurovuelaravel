@@ -26,7 +26,7 @@ class CheckLicense
         if(Carbon::now()->lessThanOrEqualTo($license_end_date)) 
             return $next($request);
         
-        
+
         return response()->json([
                 'license_expired' => 'License has expired'
             ], 401);

@@ -11,6 +11,13 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_checkoutMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/checkoutMixin */ "./resources/js/mixins/checkoutMixin.js");
 /* harmony import */ var _Components_JoinBreadcrumb__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Components/JoinBreadcrumb */ "./resources/js/components/Pages/Components/JoinBreadcrumb.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -379,9 +386,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])({
+    user: 'auth/user',
+    isAuth: 'auth/isAuth'
+  })),
   components: {
     Breadcrumb: _Components_JoinBreadcrumb__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
@@ -447,194 +460,12 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-9" }, [
-                  _c("div", { staticClass: "row g-3" }, [
-                    _c("div", { staticClass: "col-12" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "name" } }, [
-                          _vm._v("Nome e Sobrenome")
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.user.name,
-                              expression: "user.name"
-                            }
-                          ],
-                          staticClass: "form-control form-control-lg",
-                          class: { "is-invalid": _vm.errors.name },
-                          staticStyle: { "max-width": "350px" },
-                          attrs: {
-                            type: "text",
-                            id: "name",
-                            "aria-describedby": "name"
-                          },
-                          domProps: { value: _vm.user.name },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(_vm.user, "name", $event.target.value)
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors.name
-                          ? _c("div", { staticClass: "invalid-feedback" }, [
-                              _vm._v(
-                                "\n                      " +
-                                  _vm._s(_vm.errors.name[0]) +
-                                  "\n                    "
-                              )
-                            ])
-                          : _vm._e()
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-12" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "exampleInputEmail1" } }, [
-                          _vm._v("E-mail")
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.user.email,
-                              expression: "user.email"
-                            }
-                          ],
-                          staticClass: "form-control form-control-lg",
-                          class: { "is-invalid": _vm.errors.email },
-                          staticStyle: { "max-width": "350px" },
-                          attrs: {
-                            type: "email",
-                            id: "exampleInputEmail1",
-                            "aria-describedby": "emailHelp"
-                          },
-                          domProps: { value: _vm.user.email },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(_vm.user, "email", $event.target.value)
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors.email
-                          ? _c("div", { staticClass: "invalid-feedback" }, [
-                              _vm._v(
-                                "\n                      " +
-                                  _vm._s(_vm.errors.email[0]) +
-                                  "\n                    "
-                              )
-                            ])
-                          : _vm._e()
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-6" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c(
-                          "label",
-                          { attrs: { for: "exampleInputPassword1" } },
-                          [_vm._v("Senha")]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.user.password,
-                              expression: "user.password"
-                            }
-                          ],
-                          staticClass: "form-control form-control-lg",
-                          class: { "is-invalid": _vm.errors.password },
-                          attrs: {
-                            type: "password",
-                            id: "exampleInputPassword1"
-                          },
-                          domProps: { value: _vm.user.password },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.user,
-                                "password",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors.password
-                          ? _c("div", { staticClass: "invalid-feedback" }, [
-                              _vm._v(
-                                "\n                      " +
-                                  _vm._s(_vm.errors.password[0]) +
-                                  "\n                    "
-                              )
-                            ])
-                          : _vm._e()
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-6" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "repetir-senha" } }, [
-                          _vm._v("Repetir Senha")
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.user.password_confirmation,
-                              expression: "user.password_confirmation"
-                            }
-                          ],
-                          staticClass: "form-control form-control-lg",
-                          class: { "is-invalid": _vm.errors.password },
-                          attrs: { type: "password", id: "repetir-senha" },
-                          domProps: { value: _vm.user.password_confirmation },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.user,
-                                "password_confirmation",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors.password_confirmation
-                          ? _c("div", { staticClass: "invalid-feedback" }, [
-                              _vm._v(
-                                "\n                      " +
-                                  _vm._s(_vm.errors.password_confirmation[0]) +
-                                  "\n                    "
-                              )
-                            ])
-                          : _vm._e()
-                      ])
-                    ])
-                  ])
+                  _c("strong", [_vm._v("Nome e Sobrenome:")]),
+                  _vm._v(" " + _vm._s(_vm.user.name) + " "),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c("strong", [_vm._v("E-mail:")]),
+                  _vm._v(" " + _vm._s(_vm.user.email) + "\n\n              ")
                 ])
               ])
             ]),
@@ -1957,12 +1788,12 @@ var checkoutMixin = {
       // vai aparecer depois que for selecionado uma bandeira
       plan: {},
       cardBrandImage: '',
-      user: {
-        name: 'Jose Comprador',
-        email: 'c57737264923162229435@sandbox.pagseguro.com.br',
-        password: '',
-        "password_confirmation": ''
-      },
+      // user: {
+      //   name: 'Jose Comprador',
+      //   email: 'c57737264923162229435@sandbox.pagseguro.com.br',
+      //   password: '',
+      //   "password_confirmation": '',
+      // },
       payment: {
         card_number: '',
         sender_hash: '',

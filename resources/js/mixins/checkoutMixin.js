@@ -16,12 +16,12 @@ var checkoutMixin = {
       plan: {},
       cardBrandImage: '',
 
-      user: {
-        name: 'Jose Comprador',
-        email: 'c57737264923162229435@sandbox.pagseguro.com.br',
-        password: '',
-        "password_confirmation": '',
-      },
+      // user: {
+      //   name: 'Jose Comprador',
+      //   email: 'c57737264923162229435@sandbox.pagseguro.com.br',
+      //   password: '',
+      //   "password_confirmation": '',
+      // },
 
       payment: {
         card_number: '',

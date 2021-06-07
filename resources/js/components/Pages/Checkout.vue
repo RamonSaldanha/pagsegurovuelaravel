@@ -4,17 +4,18 @@
     <Breadcrumb></Breadcrumb>
 
     <div class="row">
-
       <div class="col-md-8">
         <div class="row gy-5">
-
           <div class="col-12">
             <div class="row">
               <div class="col-md-3 fw-bold">
                 Seus dados
               </div>
               <div class="col-md-9">
-                <div class="row g-3">
+                <strong>Nome e Sobrenome:</strong> {{user.name}} <br />
+                <strong>E-mail:</strong> {{user.email}}
+
+                <!-- <div class="row g-3">
 
                   <div class="col-12">
                     <div class="form-group">
@@ -56,7 +57,7 @@
                     </div>
                   </div>
 
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
@@ -369,8 +370,16 @@
 <script>
   import checkoutMixin from '../../mixins/checkoutMixin';
   import Breadcrumb from './Components/JoinBreadcrumb';
+  import {mapGetters, mapState} from 'vuex';
 
   export default {
+    computed: {
+    ...mapGetters({
+                user: 'auth/user',
+                isAuth: 'auth/isAuth'
+
+            }),
+    },
     components: {
       Breadcrumb
     },

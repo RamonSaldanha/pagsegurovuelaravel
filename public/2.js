@@ -52,26 +52,21 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "welcome-page" }, [
-      _c(
-        "div",
-        { staticClass: "d-flex h-100 flex-column justify-content-center" },
-        [
-          _c("div", { staticClass: "mx-auto" }, [
-            _c("h2", { staticClass: "h2" }, [_vm._v("Você está logado(a).")])
+  return _c("div", { staticClass: "welcome-page" }, [
+    _c(
+      "div",
+      { staticClass: "d-flex h-100 flex-column justify-content-center" },
+      [
+        _c("div", { staticClass: "mx-auto" }, [
+          _c("h2", { staticClass: "h2" }, [
+            _vm._v("Você está logado(a) " + _vm._s(_vm.user) + ".")
           ])
-        ]
-      )
-    ])
-  }
-]
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 

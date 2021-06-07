@@ -134,8 +134,6 @@ class CheckoutController extends Controller
         $encode = json_encode($xml);
         $decode = json_decode($encode, TRUE);
         
-        $dados_transacao = [];
-
         switch( $decode["status"] ) {
             case 1: return 'aguardando_pagamento';
             case 2: return 'em_analise';

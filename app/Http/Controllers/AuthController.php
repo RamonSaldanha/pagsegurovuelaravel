@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\User;
+use Gate;
 
 class AuthController extends Controller
 {
@@ -70,6 +71,12 @@ class AuthController extends Controller
  
     public function user(Request $request)
     {
-        return response()->json($request->user());
+        $user = $request->user();
+
+        if( Gate::denies ('check-license') ) {
+            $user['license_expired'] = 'License has expired';
+        }
+
+        return response()->json($user);
     }
 }

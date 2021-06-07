@@ -27,9 +27,10 @@ Route::group([
     Route::group([
       'middleware' => 'auth:api',
     ], function() {
-        Route::group(['middleware' => 'checkLicense'], function(){
-            Route::get('user', 'AuthController@user');
-        });
+        // Route::group(['middleware' => 'checkLicense'], function(){
+        // });
+
+        Route::get('user', 'AuthController@user');
 
         Route::get('logout', 'AuthController@logout');
     });

@@ -51,7 +51,7 @@ const actions = {
         }
       })
       .then(response => {
-        commit('setUser', response.data );
+        commit('setUser', response);
         commit('setAuth', true);
         resolve(response);
       })
