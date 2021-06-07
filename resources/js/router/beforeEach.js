@@ -2,84 +2,63 @@ import store from '../store';
 
 export default async (to, from, next) => {
   const token = localStorage.getItem('access_token');
+  let { role, auth } = to.meta;
 
-  if( token ) {
-    store.dispatch('auth/getUserByToken', token )
-    .then(resp => {
-      // todas as rotas que não exigerem rote vão ser representados pelo nível de acesso 0
-      to.meta.role = to.meta.role ? to.meta.role : 0;
-      // resp.license_expired
-      if( resp.role  >= to.meta.role ) {
-        if( resp.license_expired ) {
-          
-          store.dispatch('auth/logout', token )
-          .then(function (response) {
-            localStorage.removeItem('access_token');
-            Swal.fire({
-              position: 'top-end',
-              icon: 'error',
-              title: 'Sua assinatura venceu!',
-              showConfirmButton: false,
-              timer: 3000
-            })
-            return next({
-              path: '/checkout/trimestral',
-            })
-          })
+  // se precisar de login e não tiver token
+  if( auth && !token ) {
 
-        } else {
-          return next();
-        }
-      } else {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'error',
-          title: 'Você não tem permissão!',
-          showConfirmButton: false
-        })
-        return next({
-          path: '/login',
-        })
-      }
+    Swal.fire({
+      position: 'top-end',
+      icon: 'error',
+      title: 'Você não está logado!',
+      showConfirmButton: false,
     })
-    // legado:
 
-    // .catch(error => {
-    //   if(error.responseJSON.license_expired) {
+    return next({ path: '/login' });
 
-    //     store.dispatch('auth/logout', localStorage.getItem('access_token'))
-    //     .then(function (response) {
-    //       localStorage.removeItem('access_token');
-    //       Swal.fire({
-    //         position: 'top-end',
-    //         icon: 'error',
-    //         title: 'Sua assinatura venceu!',
-    //         showConfirmButton: false,
-    //         timer: 3000
-    //       })
-    //       return next({
-    //         path: '/checkout/trimestral',
-    //       })
-    //     })
+  }
 
-    //   } else {
-    //     return next();
-    //   }
-    // })
-  } else {
-    if( to.meta.role ) {
+  if( !token ) {
+    return next();
+  }
+
+  // se tiver token
+  store.dispatch('auth/getUserByToken', token )
+  .then(resp => {
+
+    // toda as rotas sem exigência de role, será 0
+    role = role ? role : 0;
+
+     
+    // se não precisar de login
+    if( !auth ) {
+      return next();
+    }
+    
+    // se não tiver autorização
+    if( resp.role  < role ) {
       Swal.fire({
         position: 'top-end',
         icon: 'error',
-        title: 'Você não está logado!',
-        showConfirmButton: false,
-        timer: 3000
-      })
-      next({
-        path: '/login'
+        title: 'Você não tem permissão!',
+        showConfirmButton: false
       });
-    } else {
-      next();
+      return next({ path: '/login' });
     }
-  }
+    
+    // se a liceça expirou
+    if(resp.license_expired) {
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: 'Sua licença expirou!',
+        showConfirmButton: true
+      });
+      return next({ path: '/checkout/trimestral'})
+    } 
+
+    return next();
+
+  })
+
 }

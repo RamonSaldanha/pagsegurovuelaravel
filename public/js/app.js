@@ -62314,86 +62314,78 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /* harmony default export */ __webpack_exports__["default"] = (/*#__PURE__*/(function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(to, from, next) {
-    var token;
+    var token, _to$meta, role, auth;
+
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             token = localStorage.getItem('access_token');
+            _to$meta = to.meta, role = _to$meta.role, auth = _to$meta.auth; // se precisar de login e não tiver token
 
+            if (!(auth && !token)) {
+              _context.next = 5;
+              break;
+            }
+
+            Swal.fire({
+              position: 'top-end',
+              icon: 'error',
+              title: 'Você não está logado!',
+              showConfirmButton: false
+            });
+            return _context.abrupt("return", next({
+              path: '/login'
+            }));
+
+          case 5:
             if (token) {
-              _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('auth/getUserByToken', token).then(function (resp) {
-                // todas as rotas que não exigerem rote vão ser representados pelo nível de acesso 0
-                to.meta.role = to.meta.role ? to.meta.role : 0; // resp.license_expired
+              _context.next = 7;
+              break;
+            }
 
-                if (resp.role >= to.meta.role) {
-                  if (resp.license_expired) {
-                    _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('auth/logout', token).then(function (response) {
-                      localStorage.removeItem('access_token');
-                      Swal.fire({
-                        position: 'top-end',
-                        icon: 'error',
-                        title: 'Sua assinatura venceu!',
-                        showConfirmButton: false,
-                        timer: 3000
-                      });
-                      return next({
-                        path: '/checkout/trimestral'
-                      });
-                    });
-                  } else {
-                    return next();
-                  }
-                } else {
-                  Swal.fire({
-                    position: 'top-end',
-                    icon: 'error',
-                    title: 'Você não tem permissão!',
-                    showConfirmButton: false
-                  });
-                  return next({
-                    path: '/login'
-                  });
-                }
-              }); // legado:
-              // .catch(error => {
-              //   if(error.responseJSON.license_expired) {
-              //     store.dispatch('auth/logout', localStorage.getItem('access_token'))
-              //     .then(function (response) {
-              //       localStorage.removeItem('access_token');
-              //       Swal.fire({
-              //         position: 'top-end',
-              //         icon: 'error',
-              //         title: 'Sua assinatura venceu!',
-              //         showConfirmButton: false,
-              //         timer: 3000
-              //       })
-              //       return next({
-              //         path: '/checkout/trimestral',
-              //       })
-              //     })
-              //   } else {
-              //     return next();
-              //   }
-              // })
-            } else {
-              if (to.meta.role) {
+            return _context.abrupt("return", next());
+
+          case 7:
+            // se tiver token
+            _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('auth/getUserByToken', token).then(function (resp) {
+              // toda as rotas sem exigência de role, será 0
+              role = role ? role : 0; // se não precisar de login
+
+              if (!auth) {
+                return next();
+              } // se não tiver autorização
+
+
+              if (resp.role < role) {
                 Swal.fire({
                   position: 'top-end',
                   icon: 'error',
-                  title: 'Você não está logado!',
-                  showConfirmButton: false,
-                  timer: 3000
+                  title: 'Você não tem permissão!',
+                  showConfirmButton: false
                 });
-                next({
+                return next({
                   path: '/login'
                 });
-              } else {
-                next();
-              }
-            }
+              } // se a liceça expirou
 
-          case 2:
+
+              if (resp.license_expired) {
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'error',
+                  title: 'Sua licença expirou!',
+                  showConfirmButton: true
+                });
+                return next({
+                  path: '/checkout/trimestral'
+                });
+              }
+
+              return next();
+            });
+
+          case 8:
           case "end":
             return _context.stop();
         }
@@ -62429,7 +62421,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   routes: [{
     path: '/',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! ../components/Pages/Welcome */ "./resources/js/components/Pages/Welcome.vue"));
+      return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! ../components/Pages/Welcome */ "./resources/js/components/Pages/Welcome.vue"));
     },
     meta: {
       auth: false
@@ -62437,7 +62429,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   }, {
     path: '/login',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! ../components/Pages/Login */ "./resources/js/components/Pages/Login.vue"));
+      return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ../components/Pages/Login */ "./resources/js/components/Pages/Login.vue"));
     },
     meta: {
       auth: false
@@ -62445,7 +62437,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   }, {
     path: '/register',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ../components/Pages/Register */ "./resources/js/components/Pages/Register.vue"));
+      return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! ../components/Pages/Register */ "./resources/js/components/Pages/Register.vue"));
     },
     meta: {
       auth: false
@@ -62453,7 +62445,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   }, {
     path: '/pricing',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ../components/Pages/Pricing */ "./resources/js/components/Pages/Pricing.vue"));
+      return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ../components/Pages/Pricing */ "./resources/js/components/Pages/Pricing.vue"));
     },
     meta: {
       auth: false
@@ -62462,7 +62454,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   {
     path: '/join',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! ../components/Pages/Join */ "./resources/js/components/Pages/Join.vue"));
+      return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ../components/Pages/Join */ "./resources/js/components/Pages/Join.vue"));
     },
     meta: {
       auth: false
@@ -62470,7 +62462,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   }, {
     path: '/checkout/:plan',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(8), __webpack_require__.e(0)]).then(__webpack_require__.bind(null, /*! ../components/Pages/Checkout */ "./resources/js/components/Pages/Checkout.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(9), __webpack_require__.e(0)]).then(__webpack_require__.bind(null, /*! ../components/Pages/Checkout */ "./resources/js/components/Pages/Checkout.vue"));
     },
     meta: {
       auth: false
@@ -62480,7 +62472,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   {
     path: '/home',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ../components/Pages/Logged */ "./resources/js/components/Pages/Logged.vue"));
+      return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! ../components/Pages/Logged */ "./resources/js/components/Pages/Logged.vue"));
     },
     meta: {
       auth: true,
@@ -62489,7 +62481,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   }, {
     path: '/admin',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ../components/Pages/Admin/Dashboard */ "./resources/js/components/Pages/Admin/Dashboard.vue"));
+      return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ../components/Pages/Admin/Dashboard */ "./resources/js/components/Pages/Admin/Dashboard.vue"));
     },
     meta: {
       auth: true,
@@ -62498,7 +62490,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   }, {
     path: "/*",
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ../components/Pages/PageNotFound */ "./resources/js/components/Pages/PageNotFound.vue"));
+      return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ../components/Pages/PageNotFound */ "./resources/js/components/Pages/PageNotFound.vue"));
     },
     meta: {
       auth: false

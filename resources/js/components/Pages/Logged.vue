@@ -9,7 +9,6 @@
 </template>
 
 <script>
-  import store from '../../store';
   import {mapGetters, mapState} from 'vuex';
   export default {
     computed: {
