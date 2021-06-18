@@ -66,11 +66,8 @@ class CheckoutController extends Controller
     public function pay (Request $request) {
 
         $planos = Config::get('pagseguro.planos');
-
         $plano_selecionado = $planos[ strtolower ( $request->plan["title"] ) ];
-
         $valor_total = number_format($plano_selecionado["price"], 2);
-
         $valor_parcela = number_format($request->payment["installments"]["selected"]["value"], 2);
         
         $data =[

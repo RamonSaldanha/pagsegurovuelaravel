@@ -12,6 +12,8 @@ class AuthController extends Controller
 {
     public function signup(Request $request)
     {
+        // dd(Carbon::now('America/Sao_Paulo'));
+
         $request->validate([
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string|confirmed',
@@ -25,6 +27,19 @@ class AuthController extends Controller
 
         $user->save();
         
+        Auth::login($user);
+
+        $tokenResult = $user->createToken('Personal Access Token');
+        $token = $tokenResult->token;
+
+        $token->expires_at = Carbon::now()->addWeeks(1);
+        
+        $token->save();
+
+        $user['access_token'] = $tokenResult->accessToken;
+        $user['token_type'] = 'Bearer';
+        $user['expires_at'] = Carbon::parse( $tokenResult->token->expires_at )->toDateTimeString();
+
         return response()->json([
             'message' => 'Successfully created user!'
         ], 201);

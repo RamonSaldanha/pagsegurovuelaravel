@@ -14,9 +14,10 @@ class CheckLicense
      * @param  \Closure  $next
      * @return mixed
      */
+    
     public function handle($request, Closure $next)
     {
-
+        /*EM DESUSO*/
         $license_start_date = new Carbon($request->user()->license_date_confirmation);
             
         $license_end_date = new Carbon($request->user()->license_date_confirmation);

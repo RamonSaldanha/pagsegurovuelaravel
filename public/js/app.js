@@ -62273,7 +62273,15 @@ var authMixin = {
         password: vm.password,
         "password_confirmation": vm.password_confirmation
       }).then(function (response) {
-        vm.$router.push('login');
+        _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch('auth/login', {
+          email: vm.email,
+          password: vm.password
+        }).then(function (response) {
+          localStorage.setItem('access_token', response.data.access_token);
+          vm.$router.push('home');
+        })["catch"](function (error) {
+          vm.errors.other = "Ocorreu um erro.";
+        });
       })["catch"](function (error) {
         vm.errors = error.responseJSON.errors;
       });
@@ -62284,7 +62292,7 @@ var authMixin = {
       _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch('auth/logout', localStorage.getItem('access_token')).then(function (response) {
         localStorage.removeItem('access_token');
         $('#logout').text('Sair');
-        vm.$router.push('login');
+        vm.$router.push('/login');
       });
     }
   }
@@ -62665,8 +62673,8 @@ var mutations = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\ramon\Desktop\documento-juridico\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\ramon\Desktop\documento-juridico\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\ramon\Desktop\autenticação vue laravel + checkout\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\ramon\Desktop\autenticação vue laravel + checkout\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

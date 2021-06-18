@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->integer('license_period')->default(7);
-            $table->date('license_date_confirmation')->default(Carbon::now('America/Sao_Paulo'));
+            $table->timestamp('license_date_confirmation')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->integer('role')->default(1);

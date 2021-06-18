@@ -25,7 +25,15 @@ var authMixin = {
         password: vm.password,
         "password_confirmation": vm.password_confirmation
       }).then( (response) => {
-          vm.$router.push('login');
+        store.dispatch('auth/login',{
+          email: vm.email,
+          password: vm.password
+        }).then( (response) => {
+          localStorage.setItem('access_token', response.data.access_token)
+          vm.$router.push('home');
+        }).catch(error=>{
+          vm.errors.other = "Ocorreu um erro."
+        });
       }).catch(error=>{
         vm.errors = error.responseJSON.errors;
       });
@@ -38,7 +46,7 @@ var authMixin = {
       .then(function (response) {
         localStorage.removeItem('access_token');
         $('#logout').text('Sair')
-        vm.$router.push('login');
+        vm.$router.push('/login');
       })
     }
   },
